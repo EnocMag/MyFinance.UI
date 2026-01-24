@@ -4,10 +4,11 @@ import { CategoryService } from '../../services/category-service';
 import { TransactionService } from '../../services/transaction-service';
 import { Category } from '../../models/category-model';
 import { createTransactionModel } from '../../models/transaction-model';
+import { CustomDropdown } from '../custom-dropdown/custom-dropdown';
 
 @Component({
   selector: 'app-transaction-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CustomDropdown],
   templateUrl: './transaction-form.html',
   styles: ``,
 })
@@ -18,6 +19,16 @@ export class TransactionForm implements OnInit {
   ) {}
   categories: Category[] = [];
   submitted = false;
+
+  selectedCategory: Category | null = null;
+
+  formatCategoryOption = (category: Category): string => {
+    return `${category.name}`;
+  };
+
+  onCategorySelected(category: Category): void {
+    this.selectedCategory = category;
+  }
 
   ngOnInit() {
     this.categoryService.getAllCategories().subscribe((category) => {
@@ -36,7 +47,7 @@ export class TransactionForm implements OnInit {
       Validators.required,
     ]),
     description: new FormControl(null),
-    categoryId: new FormControl(null, {
+    categoryId: new FormControl(0, {
       validators: [Validators.required, Validators.min(1)],
     }),
   });
