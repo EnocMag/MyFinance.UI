@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { TransactionForm } from './transaction-form/transaction-form';
+import { TransactionForm } from './components/transaction-form/transaction-form';
 
 @Component({
   selector: 'app-root',

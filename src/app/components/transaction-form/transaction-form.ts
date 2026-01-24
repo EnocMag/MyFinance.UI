@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CategoryService } from '../services/category-service';
-import { TransactionService } from '../services/transaction-service';
-import { Category } from '../models/category-model';
-import { createTransactionModel } from '../models/transaction-model';
+import { CategoryService } from '../../services/category-service';
+import { TransactionService } from '../../services/transaction-service';
+import { Category } from '../../models/category-model';
+import { createTransactionModel } from '../../models/transaction-model';
 
 @Component({
   selector: 'app-transaction-form',
