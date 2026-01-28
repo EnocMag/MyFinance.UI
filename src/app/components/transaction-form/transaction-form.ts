@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CategoryService } from '../../services/category-service';
 import { TransactionService } from '../../services/transaction-service';
 import { Category } from '../../models/category-model';
 import { createTransactionModel } from '../../models/transaction-model';
 import { CustomDropdown } from '../custom-dropdown/custom-dropdown';
+import { UiDropdown } from '../ui-dropdown/ui-dropdown';
 
 @Component({
   selector: 'app-transaction-form',
-  imports: [ReactiveFormsModule, CustomDropdown],
+  imports: [ReactiveFormsModule, UiDropdown],
   templateUrl: './transaction-form.html',
   styles: ``,
 })
@@ -17,7 +18,8 @@ export class TransactionForm implements OnInit {
     private categoryService: CategoryService,
     private transactionService: TransactionService
   ) {}
-  categories: Category[] = [];
+  // categories: Category[] = [];
+  categories = signal<Category[]>([]);
   submitted = false;
 
   selectedCategory: Category | null = null;
@@ -32,7 +34,7 @@ export class TransactionForm implements OnInit {
 
   ngOnInit() {
     this.categoryService.getAllCategories().subscribe((category) => {
-      this.categories = category.data;
+      this.categories.set(category.data);
     });
   }
 

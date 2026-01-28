@@ -81,15 +81,12 @@
   <label class="block text-gray-800 font-medium mb-2">
     Category
   </label>
-  <app-custom-dropdown 
-        [items]="categories"
-        [selectedItem]="selectedCategory"
-        [trackByField]="'id'"
-        [placeholder]="'Select category'"
-        [optionFormatter]="formatCategoryOption"
-        (selectionChange)="onCategorySelected($event)"
-        >
-  </app-custom-dropdown>
+  <app-ui-dropdown
+        formControlName="categoryId"
+        [items]= "categories"
+        trackByField="id"
+        labelField="name"
+        />
   @if (categoryId.invalid && categoryId.touched) 
   {
     <p class="text-red-600 text-sm mb-4">

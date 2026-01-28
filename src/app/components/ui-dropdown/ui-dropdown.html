@@ -1,0 +1,29 @@
+<div class="relative w-full">
+  <button
+    type="button"
+    (click)="toggleDropdown()"
+    [disabled]="disabled"
+    class="w-full px-4 py-3 bg-white border border-gray-300 rounded-lg
+           text-gray-700 text-left flex justify-between items-center
+           focus:outline-none focus:ring-2 focus:ring-emerald-500
+           disabled:bg-gray-100 disabled:cursor-not-allowed"
+  >
+    <span>{{ getDisplayValue() }}</span>
+    <span [class.rotate-180]="isDropdownOpen">▼</span>
+  </button>
+
+  @if (isDropdownOpen) {
+    <div class="absolute z-20 w-full mt-1 bg-white border rounded-lg shadow-lg">
+      <ul>
+        @for (item of items(); track item[trackByField()]) {
+          <li
+            (click)="selectItem(item)"
+            class="px-4 py-2 hover:bg-emerald-50 cursor-pointer"
+          >
+            {{ item[labelField()] }}
+          </li>
+        }
+      </ul>
+    </div>
+  }
+</div>
