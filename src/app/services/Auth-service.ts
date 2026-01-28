@@ -34,4 +34,10 @@ export class AuthService {
         const payload = JSON.parse(atob(localStorage.getItem('access-token')!.split('.')[1]));
         return payload.exp > Date.now() / 1000;
     }
+    getToken(): string | null {
+        return localStorage.getItem('access-token');
+    }
+    logout(): void {
+        localStorage.removeItem('access-token');
+    }
 }
