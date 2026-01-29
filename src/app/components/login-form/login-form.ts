@@ -36,11 +36,8 @@ export class LoginForm {
   async onSubmit() {
 
     const credentials = this.loginForm.value;
-    console.log('Login data:', credentials);
-
 
     const authResponse = await this.authService.login(credentials.username, credentials.password);
-    console.log('Auth response:', authResponse);
     if (authResponse) {
       this.router.navigate(['/transactions']);
     }
