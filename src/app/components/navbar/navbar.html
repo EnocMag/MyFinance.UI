@@ -1,0 +1,37 @@
+<nav class="bg-emerald-700 text-white px-6 py-4 flex justify-between items-center shadow-md">
+  <!-- Logo / App Name -->
+  <div class="font-bold text-xl cursor-pointer" (click)="navigate('transactions')">
+    MyFinance
+  </div>
+
+  <!-- Menú de navegación -->
+  <ul class="flex gap-4">
+    <li>
+      <button (click)="navigate('transactions')" 
+              class="px-3 py-1 rounded hover:bg-emerald-600 transition hover:cursor-pointer"
+              [class.font-semibold]="currentRoute.includes('transactions')">
+        Transactions
+      </button>
+    </li>
+    <li>
+      <button (click)="navigate('categories')" 
+              class="px-3 py-1 rounded hover:bg-emerald-600 transition hover:cursor-pointer"
+              [class.font-semibold]="currentRoute.includes('categories')">
+        Categories
+      </button>
+    </li>
+    <li>
+      <button (click)="navigate('reportes')" 
+              class="px-3 py-1 rounded hover:bg-emerald-600 transition hover:cursor-pointer"
+              [class.font-semibold]="currentRoute.includes('reportes')">
+        Reports
+      </button>
+    </li>
+  </ul>
+
+  <!-- Logout -->
+  <button (click)="logout()"
+          class="bg-red-600 px-3 py-1 rounded hover:bg-red-700 transition hover:cursor-pointer">
+    Logout
+  </button>
+</nav>
