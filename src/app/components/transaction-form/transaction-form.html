@@ -15,7 +15,7 @@
   <input type="date"
         formControlName="date"
         class="w-full px-4 py-2 border border-gray-400 rounded-md
-                focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 mb-4"/>
+                focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 mb-1"/>
 
   <label class="block text-gray-800 font-medium mb-2">
     Amount
@@ -25,7 +25,7 @@
         min="0"
         formControlName="amount"
         class="w-full px-4 py-2 border border-gray-400 rounded-md
-                focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 mb-4"/>
+                focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 mb-1"/>
   @if (amount.invalid && amount.touched) 
   {
     <p class="text-red-600 text-sm mb-4">
@@ -75,7 +75,7 @@
             rows="3"
             placeholder="e.g. Grocery shopping, Salary, Rent..."
             class="w-full px-4 py-2 border border-gray-400 rounded-md
-                  focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 mb-4">
+                  focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 mb-1">
   </textarea>
 
   <label class="block text-gray-800 font-medium mb-2">
@@ -86,8 +86,9 @@
         [items]= "categories"
         trackByField="id"
         labelField="name"
+        [valueField]="'id'"
         />
-  @if (categoryId.invalid && categoryId.touched) 
+  @if (categoryId.invalid && categoryId.touched)
   {
     <p class="text-red-600 text-sm mb-4">
       Please select a category.

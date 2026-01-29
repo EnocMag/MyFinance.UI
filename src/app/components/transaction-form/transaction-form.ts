@@ -4,8 +4,8 @@ import { CategoryService } from '../../services/category-service';
 import { TransactionService } from '../../services/transaction-service';
 import { Category } from '../../models/category-model';
 import { createTransactionModel } from '../../models/transaction-model';
-import { CustomDropdown } from '../custom-dropdown/custom-dropdown';
 import { UiDropdown } from '../ui-dropdown/ui-dropdown';
+import { ToastService } from '../../services/toast-service';
 
 @Component({
   selector: 'app-transaction-form',
@@ -16,11 +16,11 @@ import { UiDropdown } from '../ui-dropdown/ui-dropdown';
 export class TransactionForm implements OnInit {
   constructor (
     private categoryService: CategoryService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private toastService: ToastService
   ) {}
   // categories: Category[] = [];
   categories = signal<Category[]>([]);
-  submitted = false;
 
   selectedCategory: Category | null = null;
 
@@ -76,7 +76,6 @@ export class TransactionForm implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
 
     if (this.transactionForm.invalid) return;
 
@@ -91,10 +90,9 @@ export class TransactionForm implements OnInit {
     this.transactionService.createTransaction(transaction).subscribe({
       next: (response) => {
         this.transactionForm.reset();
-        this.submitted = false;
+        this.toastService.success('Transaction created successfully');
         console.log('Transaction created successfully:', response);
       }
     });
-
   }
 }
