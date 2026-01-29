@@ -20,6 +20,7 @@ export class UiDropdown implements ControlValueAccessor {
   // items = signal<any[]>([]);
 
   @Input() items = signal<any[]>([]);
+  @Input() valueField?: string | null;
   trackByField = signal<string>('id');
   labelField = signal<string>('name');
 
@@ -60,7 +61,8 @@ export class UiDropdown implements ControlValueAccessor {
 
   selectItem(item: any) {
     this.selectedItem.set(item);
-    this.onChange(item); //  clave
+    const valueToEmit = this.valueField ? item[this.valueField] : item;
+    this.onChange(valueToEmit);
     this.isDropdownOpen = false;
   }
 
