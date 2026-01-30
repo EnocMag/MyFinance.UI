@@ -69,6 +69,6 @@ export class UiDropdown implements ControlValueAccessor {
   getDisplayValue(): string {
     return this.selectedItem()
       ? this.selectedItem()[this.labelField()]
-      : 'Seleccionar...';
+      : 'Select an option';
   }
 }
