@@ -21,6 +21,9 @@ export class CategoryService {
     getCategoryById(id: string): Observable<ApiResponse<Category>> {
         return this.http.get<ApiResponse<Category>>(`${this.apiUrl}/${id}`);
     }
+    getCategoriesByType(type: string): Observable<ApiResponse<Category[]>> {
+        return this.http.get<ApiResponse<Category[]>>(`${this.apiUrl}/type/${type}`,);
+    }
     updateCategory(id: string, category: Category): Observable<ApiResponse<Category>> {
         return this.http.put<ApiResponse<Category>>(`${this.apiUrl}/${id}`, category);
     }

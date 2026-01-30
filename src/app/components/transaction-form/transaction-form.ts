@@ -33,8 +33,29 @@ export class TransactionForm implements OnInit {
   }
 
   ngOnInit() {
-    this.categoryService.getAllCategories().subscribe((category) => {
-      this.categories.set(category.data);
+    this.category.disable();
+
+    this.type.valueChanges.subscribe(type => {
+      if (!type) return;
+      
+      this.category.reset();
+      this.category.enable();
+
+      this.categoryService.getCategoriesByType(type).subscribe(response => {
+        this.categories.set(response.data);
+      })
+
+      // if (type === 'Expense') {
+      //   this.categoryService.getCategoriesByType('Expense').subscribe((category) => {
+      //     console.log(category.data);
+      //     this.categories.set(category.data)
+      //   },);
+      // } else if (type === 'Income') {
+      //   this.category.enable();
+      //   this.categoryService.getCategoriesByType('Income').subscribe((category) => {
+      //     this.categories.set(category.data)
+      //   },);
+      // }
     });
   }
 
@@ -49,7 +70,7 @@ export class TransactionForm implements OnInit {
       Validators.required,
     ]),
     description: new FormControl(null),
-    categoryId: new FormControl(0, {
+    category: new FormControl({value: null, disabled: true }, {
       validators: [Validators.required, Validators.min(1)],
     }),
   });
@@ -61,13 +82,13 @@ export class TransactionForm implements OnInit {
     return this.transactionForm.controls.amount;
   }
   get type() {
-    return this.transactionForm.controls.type;
+    return this.transactionForm.get('type')!;
   }
   get description() {
     return this.transactionForm.controls.description;
   }
-  get categoryId() {
-    return this.transactionForm.controls.categoryId;
+  get category() {
+    return this.transactionForm.get('category')!;
   }
 
   setType(value: 'Income' | 'Expense') {
@@ -84,7 +105,7 @@ export class TransactionForm implements OnInit {
       amount: this.amount.value!,
       type: this.type.value as 'Income' | 'Expense',
       description: this.description.value ?? undefined,
-      categoryId: this.categoryId.value!,
+      category: this.category.value!,
     }
 
     this.transactionService.createTransaction(transaction).subscribe({

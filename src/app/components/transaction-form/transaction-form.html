@@ -82,13 +82,13 @@
     Category
   </label>
   <app-ui-dropdown
-        formControlName="categoryId"
-        [items]= "categories"
-        trackByField="id"
-        labelField="name"
-        [valueField]="'id'"
+      formControlName="category"
+      [items]= "categories"
+      trackByField="id"
+      labelField="name"
+      [valueField]="'id'"
         />
-  @if (categoryId.invalid && categoryId.touched)
+  @if (category.invalid && category.touched)
   {
     <p class="text-red-600 text-sm mb-4">
       Please select a category.

@@ -18,5 +18,5 @@ export interface createTransactionModel {
     amount: number;
     type: 'Income' | 'Expense';
     description?: string;
-    categoryId: number;
+    category: number;
 }
