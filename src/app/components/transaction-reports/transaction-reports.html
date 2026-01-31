@@ -1,0 +1,47 @@
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (transaction of transactions; track transaction.id) {
+            <tr>
+                <td>
+                    {{ transaction.id }}
+                </td>
+                <td>
+                    {{ transaction.amount }}
+                </td>
+                <td>
+                    {{ transaction.type }}
+                </td>
+                <td>
+                    {{ transaction.description }}
+                </td>
+                <td>
+                    {{ transaction.categoryNameSnapshot }}
+                </td>
+                <td>
+                    {{ transaction.createdAt }}
+                </td>
+                <td>
+                    {{ transaction.updatedAt }}
+                </td>
+            </tr>
+        }
+        @empty {
+            <tr>
+                <td>
+                    There are no transactions to show. 
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
