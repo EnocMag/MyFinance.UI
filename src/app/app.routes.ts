@@ -9,7 +9,8 @@ export const routes: Routes = [
         canActivate: [authGuard],
         children: [
             { path: 'transactions', loadComponent: () => import('./components/transaction-form/transaction-form').then(m => m.TransactionForm) },
-            { path: 'categories', loadComponent: () => import('./components/category-form/category-form').then(m => m.CategoryForm) }
+            { path: 'categories', loadComponent: () => import('./components/category-form/category-form').then(m => m.CategoryForm) },
+            { path: 'reports', loadComponent: () => import('./components/transaction-reports/transaction-reports').then(m => m.TransactionReports) }
         ]
     },
     { path: '**', redirectTo: 'transactions' },
