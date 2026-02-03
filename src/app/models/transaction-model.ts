@@ -1,7 +1,7 @@
 import { Category } from "./category-model";
 
 export interface Transaction {
-    id: string;
+    id: number;
     date: Date;
     amount: number;
     type: 'Income' | 'Expense';
@@ -18,5 +18,5 @@ export interface createTransactionModel {
     amount: number;
     type: 'Income' | 'Expense';
     description?: string;
-    category: number;
+    categoryId: number;
 }

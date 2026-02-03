@@ -6,10 +6,12 @@ import { Category } from '../../models/category-model';
 import { createTransactionModel } from '../../models/transaction-model';
 import { UiDropdown } from '../ui-dropdown/ui-dropdown';
 import { ToastService } from '../../services/toast-service';
+import { FlatpickrDirective } from '../../directives/flatpickr-directive';
+
 
 @Component({
   selector: 'app-transaction-form',
-  imports: [ReactiveFormsModule, UiDropdown],
+  imports: [ReactiveFormsModule, UiDropdown, FlatpickrDirective ],
   templateUrl: './transaction-form.html',
   styles: ``,
 })
@@ -19,7 +21,6 @@ export class TransactionForm implements OnInit {
     private transactionService: TransactionService,
     private toastService: ToastService
   ) {}
-  // categories: Category[] = [];
   categories = signal<Category[]>([]);
 
   selectedCategory: Category | null = null;
@@ -44,18 +45,6 @@ export class TransactionForm implements OnInit {
       this.categoryService.getCategoriesByType(type).subscribe(response => {
         this.categories.set(response.data);
       })
-
-      // if (type === 'Expense') {
-      //   this.categoryService.getCategoriesByType('Expense').subscribe((category) => {
-      //     console.log(category.data);
-      //     this.categories.set(category.data)
-      //   },);
-      // } else if (type === 'Income') {
-      //   this.category.enable();
-      //   this.categoryService.getCategoriesByType('Income').subscribe((category) => {
-      //     this.categories.set(category.data)
-      //   },);
-      // }
     });
   }
 
@@ -82,13 +71,13 @@ export class TransactionForm implements OnInit {
     return this.transactionForm.controls.amount;
   }
   get type() {
-    return this.transactionForm.get('type')!;
+    return this.transactionForm.controls.type;
   }
   get description() {
     return this.transactionForm.controls.description;
   }
   get category() {
-    return this.transactionForm.get('category')!;
+    return this.transactionForm.controls.category;
   }
 
   setType(value: 'Income' | 'Expense') {
@@ -105,7 +94,7 @@ export class TransactionForm implements OnInit {
       amount: this.amount.value!,
       type: this.type.value as 'Income' | 'Expense',
       description: this.description.value ?? undefined,
-      category: this.category.value!,
+      categoryId: this.category.value!,
     }
 
     this.transactionService.createTransaction(transaction).subscribe({
