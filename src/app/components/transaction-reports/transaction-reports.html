@@ -1,47 +1,81 @@
-<table>
-    <thead>
-        <tr>
-            <th>Date</th>
-            <th>Amount</th>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Created At</th>
-            <th>Updated At</th>
+<section class="max-w-6xl mx-auto mt-10 p-8 bg-white shadow-2xl rounded-2xl border border-gray-100">
+
+  <div class="flex justify-between items-center mb-8">
+    <h2 class="text-3xl font-bold text-gray-800 tracking-tight">
+      Transactions <span class="text-emerald-600">Report</span>
+    </h2>
+    <span class="bg-emerald-50 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full uppercase">
+      Live Data
+    </span>
+  </div>
+
+  <div class="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+    <table class="min-w-full divide-y divide-gray-200">
+      
+      <thead class="bg-gray-50">
+        <tr class="text-left text-gray-500 text-xs font-semibold uppercase tracking-wider">
+          <th class="px-6 py-4">Date</th>
+          <th class="px-6 py-4">Amount</th>
+          <th class="px-6 py-4 text-center">Type</th>
+          <th class="px-6 py-4">Description</th>
+          <th class="px-6 py-4">Category</th>
+          <th class="px-6 py-4 text-right">Activity</th>
         </tr>
-    </thead>
-    <tbody>
-        @for (transaction of transactions; track transaction.id) {
-            <tr>
-                <td>
-                    {{ transaction.id }}
-                </td>
-                <td>
-                    {{ transaction.amount }}
-                </td>
-                <td>
-                    {{ transaction.type }}
-                </td>
-                <td>
-                    {{ transaction.description }}
-                </td>
-                <td>
-                    {{ transaction.categoryNameSnapshot }}
-                </td>
-                <td>
-                    {{ transaction.createdAt }}
-                </td>
-                <td>
-                    {{ transaction.updatedAt }}
-                </td>
+      </thead>
+
+      <tbody class="bg-white divide-y divide-gray-100">
+          @for (transaction of transactions$ | async; track transaction.id) {
+            <tr class="hover:bg-emerald-50/30 transition-colors duration-200 group">
+  
+              <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-600">
+                {{ transaction.date | date:'MMM dd, yyyy' }}
+              </td>
+  
+              <td class="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900">
+                ${{ transaction.amount | number:'1.2-2' }}
+              </td>
+  
+              <td class="px-6 py-2 whitespace-nowrap text-center">
+                <span
+                  class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-lg"
+                  [class.bg-emerald-100]="transaction.type === 'Income'"
+                  [class.text-emerald-700]="transaction.type === 'Income'"
+                  [class.bg-rose-100]="transaction.type === 'Expense'"
+                  [class.text-rose-700]="transaction.type === 'Expense'">
+                  {{ transaction.type }}
+                </span>
+              </td>
+  
+              <td class="px-6 py-2 text-sm text-gray-500">
+                <div class="max-w-xs truncate group-hover:text-gray-800 transition-colors">
+                  {{ transaction.description || 'No description' }}
+                </div>
+              </td>
+  
+              <td class="px-6 py-2 whitespace-nowrap">
+                <span class="text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded">
+                  {{ transaction.categoryNameSnapshot }}
+                </span>
+              </td>
+  
+              <td class="px-6 py-2 whitespace-nowrap text-right text-xs text-gray-400">
+                <span class="block">Created: {{ transaction.createdAt | date:'shortDate' }}</span>
+                <span class="block italic text-[10px]">Edited: {{ transaction.updatedAt }}</span>
+              </td>
             </tr>
-        }
-        @empty {
+          } 
+          @empty {
             <tr>
-                <td>
-                    There are no transactions to show. 
-                </td>
+              <td colspan="6" class="px-6 py-12 text-center text-gray-400">
+                <div class="flex flex-col items-center">
+                  <span class="text-4xl mb-2">📄</span>
+                  <p class="text-lg font-medium">No transactions found</p>
+                  <p class="text-sm">Try adjusting your filters or adding a new record.</p>
+                </div>
+              </td>
             </tr>
-        }
-    </tbody>
-</table>
+          }
+      </tbody>
+    </table>
+  </div>
+</section>

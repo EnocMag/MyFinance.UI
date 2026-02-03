@@ -1,107 +1,97 @@
 <form (ngSubmit)="onSubmit()" 
-      #f="ngForm"
-      method="post"
-      action=""
       [formGroup]="transactionForm" 
-      class="max-w-md mx-auto mt-30 p-6 bg-gray-300 shadow-lg rounded-lg border border-gray-200">
+      class="max-w-md mx-auto mt-20 p-8 bg-white shadow-2xl rounded-2xl border border-gray-100">
 
-  <h2 class="text-2xl font-semibold text-emerald-700 mb-6 text-center">
-    Financial Profile
-  </h2>
-
-  <label class="block text-gray-800 font-medium mb-2">
-    Date
-  </label>
-  <input type="date"
-        formControlName="date"
-        class="w-full px-4 py-2 border border-gray-400 rounded-md
-                focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 mb-1"/>
-
-  <label class="block text-gray-800 font-medium mb-2">
-    Amount
-  </label>
-  <input type="number"
-        placeholder="0.00"
-        min="0"
-        formControlName="amount"
-        class="w-full px-4 py-2 border border-gray-400 rounded-md
-                focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 mb-1"/>
-  @if (amount.invalid && amount.touched) 
-  {
-    <p class="text-red-600 text-sm mb-4">
-      Please enter a valid amount greater than 0.
-    </p>
-  }
-  @if (amount.hasError('min') && amount.touched) {
-    <p class="text-red-600 text-sm mb-4">
-      Amount must be greater than 0.
-    </p>
-  }
-
-  <label class="block text-gray-800 font-medium mb-2">
-    Transaction Type
-  </label>
- 
-  <div class="flex gap-4 mb-4">
-    <!-- Income -->
-    <button type="button" (click)="setType('Income')" [class.bg-emerald-600]="type.value === 'Income'"
-      [class.text-white]="type.value === 'Income'" class="flex-1 py-2 rounded-md border border-emerald-600
-            text-emerald-700 font-semibold
-            hover:bg-emerald-600 hover:text-white transition
-            hover:cursor-pointer">
-      Income
-    </button>
-
-    <!-- Expense -->
-    <button type="button" (click)="setType('Expense')" [class.bg-amber-600]="type.value === 'Expense'"
-      [class.text-white]="type.value === 'Expense'" class="flex-1 py-2 rounded-md border border-amber-600
-            text-amber-700 font-semibold
-            hover:bg-amber-600 hover:text-white transition
-            hover:cursor-pointer">
-      Expense
-    </button>
+  <div class="text-center mb-8">
+    <h2 class="text-2xl font-bold text-gray-800">
+      Add <span class="text-emerald-600">Transaction</span>
+    </h2>
+    <p class="text-sm text-gray-500 mt-1">Fill in the details to update your balance.</p>
   </div>
-  @if (type.invalid && type.touched) 
-  {
-    <p class="text-red-600 text-sm mb-4">
-      Please select a transaction type.
-    </p>
-  }
-  
-  <label class="block text-gray-800 font-medium mb-2">
-    Description (optional)
-  </label>
-  <textarea formControlName="description"
-            rows="3"
-            placeholder="e.g. Grocery shopping, Salary, Rent..."
-            class="w-full px-4 py-2 border border-gray-400 rounded-md
-                  focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 mb-1">
-  </textarea>
 
-  <label class="block text-gray-800 font-medium mb-2">
-    Category
-  </label>
-  <app-ui-dropdown
+  <div class="mb-5">
+    <label class="block text-sm font-semibold text-gray-700 mb-2">Date</label>
+    <!-- <input type="date"
+           formControlName="date"
+           
+           class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all text-gray-700"/> -->
+    <input
+      type="date"
+      appFlatpickr
+      formControlName="date"
+      placeholder="dd/mm/aaaa"
+     class="w-fit px-4 py-2.5 pl-10 bg-gray-50 border border-gray-200 rounded-xl
+                focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500
+                outline-none transition-all text-gray-700 cursor-pointer"
+      />
+
+  </div>
+
+  <div class="mb-5">
+    <label class="block text-sm font-semibold text-gray-700 mb-2">Amount</label>
+    <div class="relative">
+      <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-medium">$</span>
+      <input type="number"
+             placeholder="0.00"
+             formControlName="amount"
+             class="w-full pl-8 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all text-gray-700 font-medium"/>
+    </div>
+    @if (amount.invalid && amount.touched) {
+      <p class="text-rose-600 text-xs mt-1.5 ml-1 flex items-center gap-1 italic">
+        Please enter a valid amount.
+      </p>
+    }
+  </div>
+
+  <div class="mb-6">
+    <label class="block text-sm font-semibold text-gray-700 mb-2">Transaction Type</label>
+    <div class="flex gap-3 p-1 bg-gray-100 rounded-xl">
+      <button type="button" (click)="setType('Income')" 
+              class="flex-1 py-2 rounded-lg text-sm font-bold transition-all duration-200 hover:cursor-pointer"
+              [class.bg-white]="type.value === 'Income'"
+              [class.text-emerald-600]="type.value === 'Income'"
+              [class.shadow-sm]="type.value === 'Income'"
+              [class.text-gray-500]="type.value !== 'Income'">
+        Income
+      </button>
+
+      <button type="button" (click)="setType('Expense')" 
+              class="flex-1 py-2 rounded-lg text-sm font-bold transition-all duration-200 hover:cursor-pointer"
+              [class.bg-white]="type.value === 'Expense'"
+              [class.text-rose-600]="type.value === 'Expense'"
+              [class.shadow-sm]="type.value === 'Expense'"
+              [class.text-gray-500]="type.value !== 'Expense'">
+        Expense
+      </button>
+    </div>
+  </div>
+  
+  <div class="mb-5">
+    <label class="block text-sm font-semibold text-gray-700 mb-2">Description <span class="text-gray-400 font-normal">(optional)</span></label>
+    <textarea formControlName="description"
+              rows="3"
+              placeholder="e.g. Grocery shopping..."
+              class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-4 focus:ring-emerald-500/10 focus:border-emerald-500 outline-none transition-all text-gray-700 resize-none">
+    </textarea>
+  </div>
+
+  <div class="mb-8">
+    <label class="block text-sm font-semibold text-gray-700 mb-2">Category</label>
+    <app-ui-dropdown
       formControlName="category"
-      [items]= "categories"
+      [items]="categories"
       trackByField="id"
       labelField="name"
       [valueField]="'id'"
-        />
-  @if (category.invalid && category.touched)
-  {
-    <p class="text-red-600 text-sm mb-4">
-      Please select a category.
-    </p>
-  }
+      class="custom-dropdown" />
+    @if (category.invalid && category.touched) {
+      <p class="text-rose-600 text-xs mt-1.5 ml-1 italic">Please select a category.</p>
+    }
+  </div>
 
   <button type="submit"
           [disabled]="transactionForm.invalid"
-          class="mt-6 w-full bg-emerald-600 text-white py-2 px-4 rounded-md
-            font-semibold tracking-wide
-            hover:bg-emerald-700 transition
-            hover:cursor-pointer
-            disabled:opacity-50 disabled:cursor-not-allowed">
-    Save
+          class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-3 rounded-xl font-bold text-lg shadow-lg shadow-emerald-200 transition-all active:scale-[0.98] disabled:opacity-40 disabled:shadow-none disabled:active:scale-100 hover:cursor-pointer">
+    Save Transaction
   </button>
 </form>

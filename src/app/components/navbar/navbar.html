@@ -1,37 +1,58 @@
-<nav class="bg-emerald-700 text-white px-6 py-4 flex justify-between items-center shadow-md">
-  <!-- Logo / App Name -->
-  <div class="font-bold text-xl cursor-pointer" (click)="navigate('transactions')">
-    MyFinance
+<nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100 px-8 py-3 flex justify-between items-center shadow-sm">
+  
+  <div 
+    (click)="navigate('transactions')" 
+    class="flex items-center gap-2 cursor-pointer group">
+    <div class="bg-emerald-600 p-1.5 rounded-lg group-hover:bg-emerald-500 transition-colors">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    </div>
+    <span class="font-bold text-xl tracking-tight text-gray-800">
+      My<span class="text-emerald-600">Finance</span>
+    </span>
   </div>
 
-  <!-- Menú de navegación -->
-  <ul class="flex gap-4">
+  <ul class="flex bg-gray-100/50 p-1 rounded-xl gap-1">
     <li>
       <button (click)="navigate('transactions')" 
-              class="px-3 py-1 rounded hover:bg-emerald-600 transition hover:cursor-pointer"
-              [class.font-semibold]="currentRoute.includes('transactions')">
+              class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:cursor-pointer"
+              [class.bg-white]="currentRoute.includes('transactions')"
+              [class.text-emerald-700]="currentRoute.includes('transactions')"
+              [class.shadow-sm]="currentRoute.includes('transactions')"
+              [class.text-gray-500]="!currentRoute.includes('transactions')"
+              [class.hover:text-gray-700]="!currentRoute.includes('transactions')">
         Transactions
       </button>
     </li>
     <li>
       <button (click)="navigate('categories')" 
-              class="px-3 py-1 rounded hover:bg-emerald-600 transition hover:cursor-pointer"
-              [class.font-semibold]="currentRoute.includes('categories')">
+              class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:cursor-pointer"
+              [class.bg-white]="currentRoute.includes('categories')"
+              [class.text-emerald-700]="currentRoute.includes('categories')"
+              [class.shadow-sm]="currentRoute.includes('categories')"
+              [class.text-gray-500]="!currentRoute.includes('categories')"
+              [class.hover:text-gray-700]="!currentRoute.includes('categories')">
         Categories
       </button>
     </li>
     <li>
-      <button (click)="navigate('reportes')" 
-              class="px-3 py-1 rounded hover:bg-emerald-600 transition hover:cursor-pointer"
-              [class.font-semibold]="currentRoute.includes('reportes')">
+      <button (click)="navigate('reports')" 
+              class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 hover:cursor-pointer"
+              [class.bg-white]="currentRoute.includes('reports')"
+              [class.text-emerald-700]="currentRoute.includes('reports')"
+              [class.shadow-sm]="currentRoute.includes('reports')"
+              [class.text-gray-500]="!currentRoute.includes('reports')"
+              [class.hover:text-gray-700]="!currentRoute.includes('reports')">
         Reports
       </button>
     </li>
   </ul>
 
-  <!-- Logout -->
-  <button (click)="logout()"
-          class="bg-red-600 px-3 py-1 rounded hover:bg-red-700 transition hover:cursor-pointer">
-    Logout
-  </button>
+  <div class="flex items-center gap-4">
+    <button (click)="logout()"
+            class="text-sm font-semibold text-gray-500 hover:text-rose-600 transition-colors px-3 py-2 rounded-lg hover:bg-rose-50 hover:cursor-pointer">
+      Log out
+    </button>
+  </div>
 </nav>
