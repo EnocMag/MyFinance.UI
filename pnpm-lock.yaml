@@ -26,6 +26,12 @@ importers:
       '@angular/router':
         specifier: ^21.0.0
         version: 21.1.1(@angular/common@21.1.1(@angular/core@21.1.1(@angular/compiler@21.1.1)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.1.1(@angular/compiler@21.1.1)(rxjs@7.8.2))(@angular/platform-browser@21.1.1(@angular/common@21.1.1(@angular/core@21.1.1(@angular/compiler@21.1.1)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.1.1(@angular/compiler@21.1.1)(rxjs@7.8.2)))(rxjs@7.8.2)
+      flatpickr:
+        specifier: ^4.6.13
+        version: 4.6.13
+      ngx-flatpickr:
+        specifier: ^1.0.7
+        version: 1.0.7(@angular/core@21.1.1(@angular/compiler@21.1.1)(rxjs@7.8.2))(flatpickr@4.6.13)
       rxjs:
         specifier: ~7.8.0
         version: 7.8.2
@@ -1782,6 +1788,9 @@ packages:
     resolution: {integrity: sha512-S8KoZgRZN+a5rNwqTxlZZePjT/4cnm0ROV70LedRHZ0p8u9fRID0hJUZQpkKLzro8LfmC8sx23bY6tVNxv8pQA==}
     engines: {node: '>= 18.0.0'}
 
+  flatpickr@4.6.13:
+    resolution: {integrity: sha512-97PMG/aywoYpB4IvbvUJi0RQi8vearvU0oov1WW3k0WZPBMrTQVqekSX5CjSG/M4Q3i6A/0FKXC7RyAoAUUSPw==}
+
   forwarded@0.2.0:
     resolution: {integrity: sha512-buRG0fpBtRHSTCOASe6hD258tEubFoRLb4ZNA6NxMVHNw2gOcwHo9wyablzMzOA5z9xA9L1KNjk/Nt6MT9aYow==}
     engines: {node: '>= 0.6'}
@@ -2192,6 +2201,13 @@ packages:
   negotiator@1.0.0:
     resolution: {integrity: sha512-8Ofs/AUQh8MaEcrlq5xOX0CQ9ypTF5dl78mjlMNfOK08fzpgTHQRQPBxcPlEtIw0yRpws+Zo/3r+5WRby7u3Gg==}
     engines: {node: '>= 0.6'}
+
+  ngx-flatpickr@1.0.7:
+    resolution: {integrity: sha512-1DjhXaBIZVEsUxWl6PwHJvTLNDXNPbQTb8iOqIK16hIqF9n8mIFHKd0Pq1U2lUY+VNbgs+7OjgNPB853TizGhw==}
+    engines: {node: '>= 6.9.0', npm: '>= 3.0.0'}
+    peerDependencies:
+      '@angular/core': '>=4.0.0 <5.0.0 || >=4.0.0-beta <5.0.0'
+      flatpickr: ^3.0.5-1
 
   node-addon-api@6.1.0:
     resolution: {integrity: sha512-+eawOlIgy680F0kBzPUNFhMZGtJ1YmqM6l4+Crf4IkImjYrO/mqPwRMh352g23uIaQKFItcQ64I7KMaJxHgAVA==}
@@ -4487,6 +4503,8 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  flatpickr@4.6.13: {}
+
   forwarded@0.2.0: {}
 
   fresh@2.0.0: {}
@@ -4894,6 +4912,11 @@ snapshots:
   nanoid@3.3.11: {}
 
   negotiator@1.0.0: {}
+
+  ngx-flatpickr@1.0.7(@angular/core@21.1.1(@angular/compiler@21.1.1)(rxjs@7.8.2))(flatpickr@4.6.13):
+    dependencies:
+      '@angular/core': 21.1.1(@angular/compiler@21.1.1)(rxjs@7.8.2)
+      flatpickr: 4.6.13
 
   node-addon-api@6.1.0:
     optional: true

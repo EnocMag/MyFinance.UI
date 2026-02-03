@@ -1,7 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "tailwindcss";
-
-body {
-    background-color: #212121;
-}
+@import "flatpickr/dist/flatpickr.min.css";
+@import "flatpickr/dist/themes/personal_myfinance_c.css"
