@@ -1,0 +1,88 @@
+@if (isOpen) {
+  <div
+    (click)="onBackdropClick($event)"
+    class="fixed inset-0 z-50 flex items-center justify-center 
+           bg-black/10 backdrop-blur-sm 
+           transition-opacity duration-300"
+  >
+    <div
+      class="relative w-full max-w-md mx-4 bg-white rounded-2xl shadow-2xl 
+             transform transition-all duration-300 ease-out 
+             scale-100 opacity-100"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="dialog-title"
+      aria-describedby="dialog-message"
+    >
+
+      <!-- Header -->
+      <div class="px-6 pt-6 pb-4">
+        <h2
+          id="dialog-title"
+          class="text-lg font-semibold text-gray-900 tracking-tight"
+        >
+          {{ title }}
+        </h2>
+      </div>
+
+      <!-- Message -->
+      <div class="px-6">
+        <p
+          id="dialog-message"
+          class="text-sm text-gray-600 leading-relaxed"
+        >
+          {{ message }}
+        </p>
+      </div>
+
+      <!-- Message Secondary -->
+       @if (messageSecondary) {
+      <div class="px-6">
+        <p
+          id="dialog-message-secondary"
+          class="text-sm text-gray-600 leading-relaxed"
+        >
+          {{ messageSecondary }}
+        </p>
+      </div>
+      }
+
+      <!-- Footer -->
+      <div class="px-6 py-4 mt-6 bg-gray-50 rounded-b-2xl 
+                  flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
+
+        <!-- Cancel -->
+        <button
+          (click)="onCancel()"
+          type="button"
+          class="w-full sm:w-auto px-5 py-2.5 
+                 text-sm font-medium text-gray-700 
+                 bg-white border border-gray-300 
+                 rounded-lg shadow-sm
+                 hover:bg-gray-100 
+                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400
+                 transition-all duration-200 cursor-pointer"
+          autofocus
+        >
+          {{ cancelText }}
+        </button>
+
+        <!-- Confirm -->
+        <button
+          (click)="onConfirm()"
+          type="button"
+          [ngClass]="confirmButtonClass"
+          class="w-full sm:w-auto px-5 py-2.5 
+                 text-sm font-semibold text-white 
+                 rounded-lg shadow-sm
+                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500
+                 transition-all duration-200 
+                 hover:shadow-md active:scale-[0.98] cursor-pointer"
+        >
+          {{ confirmText }}
+        </button>
+
+      </div>
+    </div>
+  </div>
+}

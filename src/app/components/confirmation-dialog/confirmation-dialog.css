@@ -1,0 +1,29 @@
+:host {
+  display: contents;
+}
+
+/* Smooth transitions for dialog appearance/disappearance */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Apply animations to dialog appearance */
+div[role="dialog"] {
+  animation: slideIn 0.3s ease-out;
+}
