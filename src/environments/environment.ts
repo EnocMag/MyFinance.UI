@@ -1,3 +1,3 @@
 export const env = {
-    myFinanceApiUrl: 'https://localhost:7086/api'
+    myFinanceApiUrl: 'http://localhost:5242/api'
 }

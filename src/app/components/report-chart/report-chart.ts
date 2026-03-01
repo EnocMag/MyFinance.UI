@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { HighchartsChartComponent } from 'highcharts-angular';
 import { TransactionService } from '../../services/transaction-service';
+import { forkJoin } from 'rxjs';
+import { Report } from '../../models/report-model';
 
 @Component({
   selector: 'app-report-chart',
@@ -10,9 +12,11 @@ import { TransactionService } from '../../services/transaction-service';
   templateUrl: './report-chart.html',
   styleUrl: './report-chart.css',
 })
-export class ReportChart {
+export class ReportChart implements OnInit {
   constructor (private transactionService: TransactionService) {}
   Highcharts: typeof Highcharts = Highcharts;
+  currentYear = new Date().getFullYear();
+  updateFlag = false;
 
   chartOptions: Highcharts.Options = {
     chart: {
@@ -20,7 +24,7 @@ export class ReportChart {
     },
 
     title: {
-      text: 'Income and Expense Year'
+      text: `Income and Expense ${this.currentYear}`
     },
 
     subtitle: {
@@ -61,21 +65,62 @@ export class ReportChart {
         type: 'area',
         name: 'Income',
         color: '#5ccb5f',
-        data: [
-          5000, 4500, 5000, 3000, 2000, 5000,
-          5000, 4300, 5000, 6000, 6000, 5000,
-        ]
-        
+        data: []
       },
       {
         type: 'area',
         name: 'Expense',
         color: '#f00',
-        data: [
-          3000, 5000, 4000, 2000, 5000, 4000, 
-          2000, 2000, 3000, 5000, 5000, 4000,
-        ]
+        data: []
       }
     ]
   };
+
+  ngOnInit(): void {
+    this.loadReportData();
+  }
+
+  private loadReportData(): void {
+    forkJoin({
+      income: this.transactionService.getMonthlyReport('Income', this.currentYear - 1),
+      expense: this.transactionService.getMonthlyReport('Expense', this.currentYear - 1)
+    }).subscribe({
+      next: ({ income, expense }) => {
+        const incomeData = this.mapReportToChartData(income.data);
+        const expenseData = this.mapReportToChartData(expense.data);
+
+        this.chartOptions.series = [
+          {
+            type: 'area',
+            name: 'Income',
+            color: '#5ccb5f',
+            data: incomeData
+          },
+          {
+            type: 'area',
+            name: 'Expense',
+            color: '#f00',
+            data: expenseData
+          }
+        ];
+
+        this.updateFlag = true;
+      },
+      error: (error) => {
+        console.error('Error loading report data:', error);
+      }
+    });
+  }
+
+  private mapReportToChartData(reports: Report[]): number[] {
+    const monthlyData = new Array(12).fill(0);
+    
+    reports.forEach(report => {
+      if (report.month >= 1 && report.month <= 12) {
+        monthlyData[report.month - 1] = report.total;
+      }
+    });
+
+    return monthlyData;
+  }
 }

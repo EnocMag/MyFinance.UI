@@ -4,6 +4,7 @@ import { env } from "../../environments/environment";
 import { createTransactionModel, Transaction } from "../models/transaction-model";
 import { Observable } from "rxjs/internal/Observable";
 import { ApiResponse } from "../models/apiResponse.model";
+import { Report } from "../models/report-model";
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +27,8 @@ export class TransactionService {
     }
     deleteTransaction(id: string): Observable<void> {
         return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    }
+    getMonthlyReport(type: 'Income' | 'Expense', year: number): Observable<ApiResponse<Report[]>> {
+        return this.http.get<ApiResponse<Report[]>>(`${this.apiUrl}/report?type=${type}&year=${year}`);
     }
 }
