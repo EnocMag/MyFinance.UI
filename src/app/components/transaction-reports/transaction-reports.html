@@ -1,44 +1,73 @@
-<section class="max-w-6xl mx-auto mt-10 p-8 bg-white shadow-2xl rounded-2xl border border-gray-100">
+<section class="max-w-6xl mx-auto mt-6 p-4 bg-white rounded border border-gray-200">
 
   <div class="flex justify-between items-center mb-8">
     <h2 class="text-3xl font-bold text-gray-800 tracking-tight">
       Transactions <span class="text-emerald-600">Report</span>
     </h2>
-    <span class="bg-emerald-50 text-emerald-700 text-xs font-bold px-3 py-1 rounded-full uppercase">
-      Live Data
-    </span>
   </div>
 
-  <div class="overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+  <!-- Date Filter Section -->
+  <div class="mb-4 p-3 w-7/16 bg-gray-50 rounded border border-gray-200">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <div>
+        <label class="block text-xs font-medium text-gray-600 mb-1">From</label>
+        <input 
+          type="date" 
+          [(ngModel)]="startDate"
+          class="px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-emerald-500">
+      </div>
+      <div>
+        <label class="block text-xs font-medium text-gray-600 mb-1">To</label>
+        <input 
+          type="date" 
+          [(ngModel)]="endDate"
+          class="px-2 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-emerald-500">
+      </div>
+      <div class="flex gap-3 items-end justify-between">
+        <button
+          (click)="filterByDate()"
+          class="flex-1 px-3 py-1 text-sm bg-emerald-600 text-white font-medium rounded hover:bg-emerald-700 transition-colors cursor-pointer">
+          Filter
+        </button>
+        <button
+          (click)="clearFilters()"
+          class="flex-1 px-3 py-1 text-sm bg-gray-300 text-gray-800 font-medium rounded hover:bg-gray-400 transition-colors cursor-pointer">
+          Clear
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="overflow-hidden rounded border border-gray-200">
     <table class="min-w-full divide-y divide-gray-200">
       
       <thead class="bg-gray-50">
         <tr class="text-left text-gray-500 text-xs font-semibold uppercase tracking-wider">
-          <th class="px-6 py-4">Date</th>
-          <th class="px-6 py-4">Amount</th>
-          <th class="px-6 py-4 text-center">Type</th>
-          <th class="px-6 py-4">Description</th>
-          <th class="px-6 py-4">Category</th>
-          <th class="px-6 py-4 text-right">Activity</th>
-          <th class="px-6 py-4 text-center">Actions</th>
+          <th class="px-3 py-2">Date</th>
+          <th class="px-3 py-2">Amount</th>
+          <th class="px-3 py-2 text-center">Type</th>
+          <th class="px-3 py-2">Description</th>
+          <th class="px-3 py-2">Category</th>
+          <th class="px-3 py-2 text-right">Activity</th>
+          <th class="px-3 py-2 text-center">Actions</th>
         </tr>
       </thead>
 
       <tbody class="bg-white divide-y divide-gray-100">
           @for (transaction of transactions$ | async; track transaction.id) {
-            <tr class="hover:bg-emerald-50/30 transition-colors duration-200 group">
+            <tr class="hover:bg-gray-50 transition-colors group border-b border-gray-100">
   
-              <td class="px-6 py-2 whitespace-nowrap text-sm text-gray-600">
+              <td class="px-3 py-1 whitespace-nowrap text-xs text-gray-600">
                 {{ transaction.date | date:'MMM dd, yyyy' }}
               </td>
   
-              <td class="px-6 py-2 whitespace-nowrap text-sm font-bold text-gray-900">
+              <td class="px-3 py-1 whitespace-nowrap text-xs font-semibold text-gray-900">
                 ${{ transaction.amount | number:'1.2-2' }}
               </td>
   
-              <td class="px-6 py-2 whitespace-nowrap text-center">
+              <td class="px-3 py-1 whitespace-nowrap text-center">
                 <span
-                  class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-lg"
+                  class="px-2 py-0.5 inline-flex text-xs font-medium rounded"
                   [class.bg-emerald-100]="transaction.type === 'Income'"
                   [class.text-emerald-700]="transaction.type === 'Income'"
                   [class.bg-rose-100]="transaction.type === 'Expense'"
@@ -47,35 +76,34 @@
                 </span>
               </td>
   
-              <td class="px-6 py-2 text-sm text-gray-500">
-                <div class="max-w-xs truncate group-hover:text-gray-800 transition-colors">
-                  {{ transaction.description || 'No description' }}
+              <td class="px-3 py-1 text-xs text-gray-500">
+                <div class="max-w-xs truncate whitespace-nowrap overflow-hidden">
+                  {{ transaction.description || '-' }}
                 </div>
               </td>
   
-              <td class="px-6 py-2 whitespace-nowrap">
-                <span class="text-sm text-gray-600 bg-gray-100 px-2 py-1 rounded">
+              <td class="px-3 py-1 whitespace-nowrap">
+                <span class="text-xs text-gray-600 bg-gray-100 px-1.5 py-0.5 rounded">
                   {{ transaction.categoryNameSnapshot }}
                 </span>
               </td>
   
-              <td class="px-6 py-2 whitespace-nowrap text-right text-xs text-gray-400">
-                <span class="block">Created: {{ transaction.createdAt | date:'shortDate' }}</span>
-                <span class="block italic text-[10px]">Edited: {{ transaction.updatedAt }}</span>
+              <td class="px-3 py-1 whitespace-nowrap text-right text-xs text-gray-400">
+                <span class="block">{{ transaction.createdAt | date:'shortDate' }}</span>
               </td>
               
-              <td class="px-6 py-2 whitespace-nowrap text-center">
-                <div class="flex gap-2 justify-center">
+              <td class="px-3 py-1 whitespace-nowrap text-center">
+                <div class="flex gap-1 justify-center">
                   <button
                     (click)="editTransaction(transaction)"
-                    class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors duration-200 cursor-pointer"
-                    title="Edit transaction">
+                    class="inline-flex items-center justify-center w-6 h-6 text-sm rounded bg-blue-100 text-blue-600 hover:bg-blue-200 transition-colors cursor-pointer"
+                    title="Edit">
                     ✏️
                   </button>
                   <button
                     (click)="deleteTransaction(transaction.id)"
-                    class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition-colors duration-200 cursor-pointer"
-                    title="Delete transaction">
+                    class="inline-flex items-center justify-center w-6 h-6 text-sm rounded bg-red-100 text-red-600 hover:bg-red-200 transition-colors cursor-pointer"
+                    title="Delete">
                     🗑️
                   </button>
                   <app-confirmation-dialog
@@ -94,12 +122,8 @@
           } 
           @empty {
             <tr>
-              <td colspan="7" class="px-6 py-12 text-center text-gray-400">
-                <div class="flex flex-col items-center">
-                  <span class="text-4xl mb-2">📄</span>
-                  <p class="text-lg font-medium">No transactions found</p>
-                  <p class="text-sm">Try adjusting your filters or adding a new record.</p>
-                </div>
+              <td colspan="7" class="px-6 py-8 text-center text-gray-400">
+                <p class="text-sm">No transactions found</p>
               </td>
             </tr>
           }
