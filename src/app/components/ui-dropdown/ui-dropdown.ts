@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, input, signal } from '@angular/core';
+import { Component, ChangeDetectionStrategy, forwardRef, input, signal } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -6,6 +6,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   imports: [],
   templateUrl: './ui-dropdown.html',
   styleUrl: './ui-dropdown.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -17,12 +18,10 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class UiDropdown implements ControlValueAccessor {
 
   //  Inputs
-  // items = signal<any[]>([]);
-
-  @Input() items = signal<any[]>([]);
-  @Input() valueField?: string | null;
-  trackByField = signal<string>('id');
-  labelField = signal<string>('name');
+  items = input<any[]>([]);
+  valueField = input<string | null | undefined>(undefined);
+  trackByField = input<string>('id');
+  labelField = input<string>('name');
 
   //  State
   isDropdownOpen = false;
@@ -61,14 +60,16 @@ export class UiDropdown implements ControlValueAccessor {
 
   selectItem(item: any) {
     this.selectedItem.set(item);
-    const valueToEmit = this.valueField ? item[this.valueField] : item;
+    const valueField = this.valueField();
+    const valueToEmit = valueField ? item[valueField] : item;
     this.onChange(valueToEmit);
     this.isDropdownOpen = false;
   }
 
   getDisplayValue(): string {
+    const labelField = this.labelField();
     return this.selectedItem()
-      ? this.selectedItem()[this.labelField()]
+      ? this.selectedItem()[labelField]
       : 'Select an option';
   }
 }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 export interface ConfirmationDialogConfig {
@@ -16,27 +16,26 @@ export interface ConfirmationDialogConfig {
   imports: [CommonModule],
   templateUrl: './confirmation-dialog.html',
   styleUrl: './confirmation-dialog.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmationDialog {
-  @Input() isOpen: boolean = false;
-  @Input() title: string = '';
-  @Input() message: string = '';
-  @Input() messageSecondary: string = '';
-  @Input() confirmText: string = 'Confirm';
-  @Input() cancelText: string = 'Cancel';
-  @Input() confirmButtonClass: string = 'bg-red-600 hover:bg-red-700';
+  isOpen = input<boolean>(false);
+  title = input<string>('');
+  message = input<string>('');
+  messageSecondary = input<string>('');
+  confirmText = input<string>('Confirm');
+  cancelText = input<string>('Cancel');
+  confirmButtonClass = input<string>('bg-red-600 hover:bg-red-700');
 
-  @Output() confirm = new EventEmitter<void>();
-  @Output() cancel = new EventEmitter<void>();
+  confirm = output<void>();
+  cancel = output<void>();
 
   onConfirm(): void {
     this.confirm.emit();
-    this.isOpen = false;
   }
 
   onCancel(): void {
     this.cancel.emit();
-    this.isOpen = false;
   }
 
   // Close dialog when clicking outside the modal

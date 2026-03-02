@@ -1,4 +1,4 @@
-@if (isOpen) {
+@if (isOpen()) {
   <div
     (click)="onBackdropClick($event)"
     class="fixed inset-0 z-50 flex items-center justify-center 
@@ -21,7 +21,7 @@
           id="dialog-title"
           class="text-lg font-semibold text-gray-900 tracking-tight"
         >
-          {{ title }}
+          {{ title() }}
         </h2>
       </div>
 
@@ -31,18 +31,18 @@
           id="dialog-message"
           class="text-sm text-gray-600 leading-relaxed"
         >
-          {{ message }}
+          {{ message() }}
         </p>
       </div>
 
       <!-- Message Secondary -->
-       @if (messageSecondary) {
+       @if (messageSecondary()) {
       <div class="px-6">
         <p
           id="dialog-message-secondary"
           class="text-sm text-gray-600 leading-relaxed"
         >
-          {{ messageSecondary }}
+          {{ messageSecondary() }}
         </p>
       </div>
       }
@@ -64,14 +64,14 @@
                  transition-all duration-200 cursor-pointer"
           autofocus
         >
-          {{ cancelText }}
+          {{ cancelText() }}
         </button>
 
         <!-- Confirm -->
         <button
           (click)="onConfirm()"
           type="button"
-          [ngClass]="confirmButtonClass"
+          [class]="confirmButtonClass()"
           class="w-full sm:w-auto px-5 py-2.5 
                  text-sm font-semibold text-white 
                  rounded-lg shadow-sm
@@ -79,7 +79,7 @@
                  transition-all duration-200 
                  hover:shadow-md active:scale-[0.98] cursor-pointer"
         >
-          {{ confirmText }}
+          {{ confirmText() }}
         </button>
 
       </div>
