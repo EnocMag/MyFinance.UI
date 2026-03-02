@@ -79,7 +79,7 @@
     <label class="block text-sm font-semibold text-gray-700 mb-2">Category</label>
     <app-ui-dropdown
       formControlName="category"
-      [items]="categories"
+      [items]="categories()"
       trackByField="id"
       labelField="name"
       [valueField]="'id'"

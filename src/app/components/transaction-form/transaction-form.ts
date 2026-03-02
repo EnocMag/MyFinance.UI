@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit, signal, ChangeDetectionStrategy, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CategoryService } from '../../services/category-service';
 import { TransactionService } from '../../services/transaction-service';
@@ -14,13 +14,13 @@ import { FlatpickrDirective } from '../../directives/flatpickr-directive';
   imports: [ReactiveFormsModule, UiDropdown, FlatpickrDirective ],
   templateUrl: './transaction-form.html',
   styles: ``,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TransactionForm implements OnInit {
-  constructor (
-    private categoryService: CategoryService,
-    private transactionService: TransactionService,
-    private toastService: ToastService
-  ) {}
+  private categoryService = inject(CategoryService);
+  private transactionService = inject(TransactionService);
+  private toastService = inject(ToastService);
+  
   categories = signal<Category[]>([]);
 
   selectedCategory: Category | null = null;
