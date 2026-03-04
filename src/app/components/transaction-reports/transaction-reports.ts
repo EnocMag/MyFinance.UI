@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { TransactionService } from '../../services/transaction-service';
 import { Transaction } from "../../models/transaction-model";
 import { CommonModule } from '@angular/common';
@@ -20,6 +20,7 @@ export class TransactionReports implements OnInit {
   public endDate: string = '';
   
   private allTransactions: Transaction[] = [];
+  private transactionIdToDelete: number | null = null;
 
   ngOnInit(): void {
     this.transactions$ = this.transactionService.getAllTransactions().pipe(map(res => {
@@ -54,7 +55,7 @@ export class TransactionReports implements OnInit {
     this.transactions$ = this.transactionService.getAllTransactions().pipe(map(res => res.data));
   }
 
-  isDialogOpen: boolean = false;
+  isDialogOpen = signal<boolean>(false);
 
   editTransaction(transaction: Transaction): void {
     // TODO: Implement edit transaction logic
@@ -62,20 +63,33 @@ export class TransactionReports implements OnInit {
   }
 
   deleteTransaction(transactionId: number): void {
-    // TODO: Implement delete transaction logic
-    this.isDialogOpen = true;
-    console.log('Delete transaction with ID:', transactionId);
+    this.transactionIdToDelete = transactionId;
+    this.isDialogOpen.set(true);
   }
 
   handleConfirm(): void {
-    this.isDialogOpen = false;
-    console.log('Transaction deleted');
-    // TODO: Add logic to delete the transaction
+    if (this.transactionIdToDelete !== null) {
+      this.transactionService.deleteTransaction(this.transactionIdToDelete.toString()).subscribe(
+        () => {
+          this.isDialogOpen.set(false);
+          this.transactionIdToDelete = null;
+          // Refrescar la lista de transacciones
+          this.transactions$ = this.transactionService.getAllTransactions().pipe(map(res => {
+            this.allTransactions = res.data;
+            return res.data;
+          }));
+        },
+        (error) => {
+          console.error('Error deleting transaction:', error);
+          this.isDialogOpen.set(false);
+          this.transactionIdToDelete = null;
+        }
+      );
+    }
   }
   
   handleCancel(): void {
-    this.isDialogOpen = false;
-    console.log('Deletion cancelled');
-    // TODO: Add logic to cancel deletion
+    this.isDialogOpen.set(false);
+    this.transactionIdToDelete = null;
   }
 }
