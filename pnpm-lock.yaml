@@ -26,6 +26,12 @@ importers:
       '@angular/router':
         specifier: ^21.0.0
         version: 21.1.1(@angular/common@21.1.1(@angular/core@21.1.1(@angular/compiler@21.1.1)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.1.1(@angular/compiler@21.1.1)(rxjs@7.8.2))(@angular/platform-browser@21.1.1(@angular/common@21.1.1(@angular/core@21.1.1(@angular/compiler@21.1.1)(rxjs@7.8.2))(rxjs@7.8.2))(@angular/core@21.1.1(@angular/compiler@21.1.1)(rxjs@7.8.2)))(rxjs@7.8.2)
+      '@azure/msal-angular':
+        specifier: ^5.1.1
+        version: 5.1.1(@azure/msal-browser@5.4.0)(rxjs@7.8.2)
+      '@azure/msal-browser':
+        specifier: ^5.4.0
+        version: 5.4.0
       flatpickr:
         specifier: ^4.6.13
         version: 4.6.13
@@ -283,6 +289,20 @@ packages:
 
   '@asamuzakjp/nwsapi@2.3.9':
     resolution: {integrity: sha512-n8GuYSrI9bF7FFZ/SjhwevlHc8xaVlb/7HmHelnc/PZXBD2ZR49NnN9sMMuDdEGPeeRQ5d0hqlSlEpgCX3Wl0Q==}
+
+  '@azure/msal-angular@5.1.1':
+    resolution: {integrity: sha512-Bp2nGt7ajxK1Uh44Vq3w8GUN9wVDyIOW/YEUMo8J5Ptp/L8R0ivzp/MWKgTta41CJ5GijKgW93cvxJXwyJcovA==}
+    peerDependencies:
+      '@azure/msal-browser': ^5.4.0
+      rxjs: ^7.0.0
+
+  '@azure/msal-browser@5.4.0':
+    resolution: {integrity: sha512-GvRbLNk26oPOPpnry4Ym8wtXrmdozGm2Sry5EKfui0siwnEuAKWEeMLLyosDo5nVEIIDO1C2t/+HpVzqqCWlfQ==}
+    engines: {node: '>=0.8.0'}
+
+  '@azure/msal-common@16.2.0':
+    resolution: {integrity: sha512-ge0nGzTLmEE5lg7tSCbTBrYqMGkpFQeQEtqfcKPuGJn/FPFf8Xz51uDfZsm5xpstNZGMYPhHvnYbL8OeNp/aLw==}
+    engines: {node: '>=0.8.0'}
 
   '@babel/code-frame@7.28.6':
     resolution: {integrity: sha512-JYgintcMjRiCvS8mMECzaEn+m3PfoQiyqukOMCCVQtoJGYJw8j/8LBJEiqkHLkfwCcs74E3pbAUFNg7d9VNJ+Q==}
@@ -3203,6 +3223,18 @@ snapshots:
       lru-cache: 11.2.4
 
   '@asamuzakjp/nwsapi@2.3.9': {}
+
+  '@azure/msal-angular@5.1.1(@azure/msal-browser@5.4.0)(rxjs@7.8.2)':
+    dependencies:
+      '@azure/msal-browser': 5.4.0
+      rxjs: 7.8.2
+      tslib: 2.8.1
+
+  '@azure/msal-browser@5.4.0':
+    dependencies:
+      '@azure/msal-common': 16.2.0
+
+  '@azure/msal-common@16.2.0': {}
 
   '@babel/code-frame@7.28.6':
     dependencies:

@@ -1,5 +1,12 @@
 # MyFinanceUI
 
+A simple Angular-based personal finance tracker.
+
+## Project status
+
+- The `v1.0-jwt-auth` Git tag marks the last working version that used a custom JWT-based authentication system.
+- Subsequent commits migrate the app to use Microsoft Entra ID (Azure AD) for authentication and authorization.
+
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.0.
 
 ## Development server

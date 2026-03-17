@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/Auth-service';
+import { MsalAuthService } from '../../services/msal-auth-service';
 
 @Component({
   selector: 'app-navbar',
@@ -11,14 +11,15 @@ import { AuthService } from '../../services/Auth-service';
 export class Navbar {
   constructor(
     private router: Router,
-    private authService: AuthService
   ) {}
+
+  private AuthService = Inject(MsalAuthService);
 
   navigate(route: string) {
     this.router.navigate([route]);
   }
   logout() {
-    this.authService.logout();
+    this.AuthService.logout();
     this.router.navigate(['/login']);
   }
   get currentRoute(): string {
